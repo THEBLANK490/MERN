@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="mapFunction()">Array Mapping</button>
+    <button onclick="arrayMapping()">String Mapping</button>
+    <script>
+        function mapFunction(){
+            const array=[1,2,3,4,5];
+            const doubleNumbers=array.map((number) => number*2);
+            console.log(doubleNumbers);
+        }
+
+        function arrayMapping(){
+            const array=['Ram','Shyam','Hari','Sita','Gita'];
+            const doubleNumbers=array.map((name) => console.log(name));
+            // console.log(doubleNumbers);
+        }
+    </script>
+</body>
+</html>

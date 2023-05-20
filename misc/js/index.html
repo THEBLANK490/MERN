@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+</head>
+<body>
+    <h1>Javascript Function</h1>
+    <button onclick="button()">Hello</button>
+    <button onclick="checkAge()">Check Age</button>
+    <p id="myParagraph">Purano text.</p>
+    <button onclick="changeText()">Text Change</button>
+    
+    <script>
+        // var myvariable=5;
+        // document.write(myvariable);
+        var myNumber = 5;
+        var myString = "Sanish Maharjan";;
+        var hisBollean = true;
+        var herNull = null;
+        var ourUndefined = undefined;
+        document.write("<br>"+myNumber + "<br>");
+        document.write(myString + "<br>");
+        document.write(hisBollean + "<br>");
+        document.write(herNull + "<br>");
+        document.write(ourUndefined + "<br>");
+
+        // date 
+        var todayDate = new Date();
+        document.write(todayDate);
+
+        // function to calculate power using math function
+        var x = Math.pow(2,3);
+        document.write("<br>"+x);
+        console.log(x);
+        function button(){
+            alert("K cha tmro Haal Khabar");
+            console.log("Check Check");
+        }
+
+        // function to check age
+        function checkAge(){
+            var age = prompt("What is Your Age?");
+            if(age <18){
+                alert("Ta Bachhai Chas.");
+            }
+            else{
+                alert ("Lala ta thulo Bhayis.");
+            }
+        }
+
+        // Array
+            var meroArray =['Ram','Shyam','Hari','Sita','Gita'];
+            document.write("<br>"+meroArray[0]);
+        // Object
+            var studentsData ={
+                name:"Ram",
+                Age:"20",
+                Class:"10",
+                Hobbies:['Cricket','Badminton','Running']
+    }
+    document.write("<br>"+studentsData.Age);
+    document.write("<br>"+studentsData.Hobbies[1]);
+
+    // For loops
+    for(let i=0;i<=meroArray.length;i++)
+    {
+        console.log(meroArray[i]);
+    }
+
+    // While loops
+    var j=0;
+    while(j<10) 
+    {
+        console.log(j);
+        j++;
+    }
+
+    // Dom manipulation
+    var check=false;
+    function changeText()
+    {
+        if(check==false){
+        document.getElementById("myParagraph").innerHTML="Naya text.";
+        check=true;
+        }
+        else
+        {
+            document.getElementById("myParagraph").innerHTML="Purano text.";
+            check=false;
+        }
+    }
+
+    // JSON
+    var jsonData={
+        "name":"Ram",
+        "Age":20,
+        "Class":10,
+    }
+    const myJson =JSON.stringify(jsonData);
+    document.write("<br>"+myJson);
+    
+    </script>
+</body>
+</html>
