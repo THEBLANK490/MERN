@@ -4,20 +4,15 @@ import { useState } from 'react';
 import {toast} from 'react-toastify'
 // import axios from 'axios'
 import { loginApi } from '../../apis/Api';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../store/userSlice';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [email,setEmail]=useState('');
   const [pass,setPass]=useState('');
-
-  // const handleEmail = (e) => {
-  //   setEmail(e.target.value);
-  // }
-
-  // const handlePass = (e) => {
-  //   setPass(e.target.value);
-  // }
-
   const handleSubmit=(e)=>{
     e.preventDefault();
 
@@ -28,8 +23,11 @@ const Login = () => {
       }).then((res)=>{
         console.log(res.data);
 
-        localStorage.setItem("token",res.data.token)
-        localStorage.setItem("user",JSON.stringify(res.data.user))
+        //dispatch to store
+        dispatch(addUser(res.data.user))
+
+        // localStorage.setItem("token",res.data.token)
+        // localStorage.setItem("user",JSON.stringify(res.data.user))
 
         toast.success("Login Success");
         navigate ("/");
@@ -41,6 +39,30 @@ const Login = () => {
     } catch(error){
       toast.error("Login Failed");
     }}
+
+  // const handleSubmit=(e)=>{
+  //   e.preventDefault();
+
+  //   try{
+  //     loginApi({
+  //       email : email,
+  //       password : pass
+  //     }).then((res)=>{
+  //       console.log(res.data);
+
+  //       localStorage.setItem("token",res.data.token)
+  //       localStorage.setItem("user",JSON.stringify(res.data.user))
+
+  //       toast.success("Login Success");
+  //       navigate ("/");
+        
+  //     }).catch((err)=>{
+  //       console.log(err);
+  //       toast.error("Login Failed");
+  //     })
+  //   } catch(error){
+  //     toast.error("Login Failed");
+  //   }}
 
 
   // axios.post("http://localhost:5000/api/user/login",{

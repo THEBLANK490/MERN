@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./database/Databse');
 const cors = require('cors');
+const cloudinary = require("cloudinary");
+const multipart = require('connect-multiparty')
 
 
 //Dotenv Config
@@ -9,6 +11,7 @@ const app = express();
 
 //express json
 app.use(express.json());
+app.use(multipart())
 
 //cors config
 const corsOptions = {
@@ -17,6 +20,12 @@ const corsOptions = {
   optionSuccessStatus:200
 };
 
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET ,
+});
+
 app.use(cors(corsOptions));
 
 // Create a Route
@@ -24,8 +33,10 @@ app.get('/', (req, res) =>{
     res.send('Welcome to API');
   });
 
+  //middleware for user controller
 app.use('/api/user',require('./controllers/userControllers'))
-
+  //middleware for product controller
+app.use('/api/product',require('./controllers/productController'))
 //Connect to DB
 connectDB();
 

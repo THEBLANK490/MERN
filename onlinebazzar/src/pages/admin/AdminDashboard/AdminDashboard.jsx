@@ -6,7 +6,19 @@ const AdminDashboard = () => {
     const [pprice,setPprice]=useState('');
     const [pcategory,setPcategory]=useState('');
     const [pdescription,setPdescription]=useState('');
-    const [pimage,setPimage]=useState('');
+    const [pimage,setPimage]=useState(null);
+
+    const handleImageUpload =(e)=>{
+      const file = e.target.files[0];
+      const reader =new FileReader()
+      reader.onload = () =>{
+        setPimage(reader.result)
+      }
+      if(file){
+        reader.readAsDataURL(file)
+      }
+    }
+    
   return (
     <>
       <div className="container">
@@ -57,8 +69,10 @@ const AdminDashboard = () => {
                             <label className="mt-2" htmlFor="">Product Description</label>
                             <textarea onChange={(e)=> setPdescription(e.target.value)} name="" id="" cols="4" rows="4" className="form-control"></textarea>
 
-                            <input onChange={(e)=> setPimage(e.target.value)} type="file" className="form-control mt-3" placeholder="Input Image" />
-                            
+                            <input onChange={handleImageUpload} type="file" className="form-control mt-3" placeholder="Input Image" />
+                            {
+                              pimage && <img src={pimage} className="object-cover rounded-3 mt-2" height={'300px'} width={'100%'} alt=""/>
+                            }
                         </div>
                     </form>
                 </div>

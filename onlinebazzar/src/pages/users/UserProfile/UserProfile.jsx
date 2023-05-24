@@ -1,6 +1,4 @@
 import React from 'react'
-// import "../../../index.css"
-
 
 const UserProfile = () => {
     // get user from local storage
