@@ -74,7 +74,7 @@ router.post('/register',async (req, res) =>{
 //create a route for login
 router.post('/login',async (req, res) =>{
 
-
+  console.log("login")
   console.log(req.body);
   //destructing
   const {email, password} = req.body;

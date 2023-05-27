@@ -2,9 +2,10 @@ const router = require('express').Router();
 const cloudinary = require('cloudinary');
 const Product =require('../models/productModel');
 const productModel = require('../models/productModel');
+const authGuard = require('../auth/authGuard');
 
 //create a add product router
-router.post("/add",async(req,res)=>{
+router.post("/add", authGuard, async(req,res)=>{
     console.log(req.body );
     
     //destructuring
