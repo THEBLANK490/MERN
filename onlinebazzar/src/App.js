@@ -15,6 +15,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminDashboard from "./pages/admin/AdminDashboard/AdminDashboard";
 import UserProfile from "./pages/users/UserProfile/UserProfile";
+import AdminProductEdit from "./pages/admin/AdminProductEdit/AdminProductEdit";
+import ProductDetails from "./pages/productDetails/ProductDetails";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   return (
@@ -23,13 +26,22 @@ function App() {
       <ToastContainer/>
       <Routes>
         <Route path="/" element={<Homepage/>} />
+        <Route path="/product/details/:id" element={<ProductDetails/>}/>
+
+        
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        {/* admin Routes */}
         <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
+        <Route path="/admin/product/edit/:id" element={<AdminProductEdit/>}></Route>
+
+        {/* user Routes */}
         <Route path="/UserProfile" element={<UserProfile/>}/>
 
         {/* About */}
         <Route path="/about" element={<About />} />
+
+        <Route path="/cart" element={<Cart/>}></Route>
       </Routes>
       <Footer/>
     </Router>

@@ -22,7 +22,19 @@ export const testApi = () => Api.get('/');
 export const registerApi = (data)=> Api.post("/api/user/register",data);
 
 //login route
-export const loginApi =(data)=> Api.post("/api/user/login",data)
+export const loginApi =(data)=> Api.post("/api/user/login",data);
 
 //product route
-export const addproductApi =(data)=> Api.post("/api/product/add",data,config)
+export const addproductApi =(data)=> Api.post("/api/product/add",data,config);
+
+//get all products route
+export const getAllProductsApi = () => Api.get('/api/product/get_products');
+
+// get single product route
+export const getSingleProductApi = (id) => Api.get(`/api/product/get_product/${id}`);
+
+//update product route
+export const updateProductApi = (id,data) => Api.put(`/api/product/update_product/${id}`,data,config)
+
+//delete product route
+export const deleteProductApi = (id) => Api.delete(`/api/product/delete_product/${id}`,config)

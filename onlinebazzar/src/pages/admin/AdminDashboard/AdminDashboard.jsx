@@ -1,52 +1,78 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addproductApi } from "../../../apis/Api";
+import { addproductApi, deleteProductApi, getAllProductsApi } from "../../../apis/Api";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [pimage, setPimage] = useState(null);
+  const [productImage, setProductImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+
+  //for response data
+  const [products, setProducts] = useState([]);
 
   const handleImageUpload = (e) => {
     // const file = e.target.files[0];
     // const reader = new FileReader();
     // reader.onload = () => {
-    //   setPimage(reader.result);
+    //   setProductImage(reader.result);
     // };
     // if (file) {
     //   reader.readAsDataURL(file);
     // }
-    setPimage(e.target.files[0]);
-    const reader = new FileReader()
-    reader.onload=()=>{
-    setPreviewImage(reader.result)
-    }
-    reader.readAsDataURL(e.target.files[0])
+    setProductImage(e.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPreviewImage(reader.result);
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
-  const handleSubmit=() => {
-    
-    const formData = new FormData()
-    formData.append("productName",productName)  
-    formData.append("productPrice",productPrice)  
-    formData.append("productCategory",productCategory)  
-    formData.append("productDescription",productDescription)
-    formData.append("productImage",pimage)   
-    
-    //Calling the Api
-    addproductApi(formData).then(res =>{
-      toast.success("Product added Successfully")
-    }).catch(err =>{
-      console.log(err);
-      toast.error("Product add Failed!")
-    })
-  }
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productPrice", productPrice);
+    formData.append("productCategory", productCategory);
+    formData.append("productDescription", productDescription);
+    formData.append("productImage", productImage);
 
-  
+    //Calling the Api
+    addproductApi(formData)
+      .then((res) => {
+        toast.success("Product added Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Product add Failed!");
+      });
+  };
+
+  useEffect(() => {
+    getAllProductsApi()
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleDelete = (id) => {
+    const confirmDelete =window.confirm("Are you sure want to delete this product");
+    if(confirmDelete){
+      deleteProductApi(id).then(res => {
+        toast.success("Product deleted successfully")
+        window.location.reload(true);
+      }).catch(err => {
+        toast.error("Product deletion Failed")
+      })
+    }
+  };
 
   return (
     <>
@@ -155,7 +181,11 @@ const AdminDashboard = () => {
                   >
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary" onClick={handleSubmit}>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
                     Save changes
                   </button>
                 </div>
@@ -176,7 +206,42 @@ const AdminDashboard = () => {
           </thead>
           <tbody>
             {/* first row */}
-            <tr>
+            {products.map((product) => {
+              return (
+                <tr>
+                  <td>
+                    <img src={product.image} className="" alt="" height={50} />
+                  </td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.category}</td>
+                  <td>{product.description}</td>
+                  <td>
+                    <div
+                      class="btn-group"
+                      role="group"
+                      aria-label="Basic example"
+                    >
+                      <Link
+                        to={`/admin/product/edit/${product._id}`}
+                        type="button"
+                        class="btn btn-success"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onClick={() => handleDelete(product._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+            {/* <tr>
               <td>
                 <img
                   src="https://picsum.photos/200"
@@ -191,41 +256,15 @@ const AdminDashboard = () => {
               <td>This is special valentines rose.</td>
               <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-success">
+                  <Link to={'/admin/product/edit/123'} type="button" class="btn btn-success">
                     Edit
-                  </button>
+                  </Link>
                   <button type="button" class="btn btn-danger">
                     Delete
                   </button>
                 </div>
               </td>
-            </tr>
-
-            {/* second row */}
-            <tr>
-              <td>
-                <img
-                  src="https://picsum.photos/200"
-                  className=""
-                  alt=""
-                  height={50}
-                />
-              </td>
-              <td>Rose</td>
-              <td>500</td>
-              <td>Flower</td>
-              <td>This is special valentines rose.</td>
-              <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-success">
-                    Edit
-                  </button>
-                  <button type="button" class="btn btn-danger">
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
