@@ -38,3 +38,13 @@ export const updateProductApi = (id,data) => Api.put(`/api/product/update_produc
 
 //delete product route
 export const deleteProductApi = (id) => Api.delete(`/api/product/delete_product/${id}`,config)
+
+//create order
+export const createOrderApi = (data) => Api.post("/api/order/create",data,config);
+
+
+//get orders by user
+export const getOrdersByUserApi = () => Api.get("/api/order/get_single",config);
+
+//get orders by user
+export const getAllOrdersApi = () => Api.get("/api/order/get_all",config);

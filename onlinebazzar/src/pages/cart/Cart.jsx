@@ -1,50 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decreaseQuantity, increaseQuantity, removeProduct } from "../store/cartSlice";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeProduct,
+} from "../store/cartSlice";
+import { createOrderApi } from "../../apis/Api";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const { cart } = useSelector((state) => ({
     cart: state.cart.cart,
   }));
 
-  const [totalAmount, setTotalAmount] = useState(0); 
+  const [totalAmount, setTotalAmount] = useState(0);
 
   //calculate total amt
-  const calculateTotalAmount = () =>{
+  const calculateTotalAmount = () => {
     let totalPrice = 0;
     cart.forEach((item) => {
-        let totalPrice = 0;
-        cart.forEach((item) => {
-            const itemTotal = item.price * item.quantity;
-            totalPrice += itemTotal;
-        })
-        setTotalAmount(totalPrice);
-    })
-  }
+      let totalPrice = 0;
+      cart.forEach((item) => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+      });
+      setTotalAmount(totalPrice);
+    });
+  };
 
-// calculate total amt and update it when cart changes
+  // calculate total amt and update it when cart changes
   useEffect(() => {
     calculateTotalAmount();
-  },[cart])
+  }, [cart]);
 
   const [shipingAddress, setShipingAddress] = useState("");
 
   const dispatch = useDispatch();
 
   const handleQuantityDecrease = (itemId) => {
-    dispatch(decreaseQuantity({itemId}))
+    dispatch(decreaseQuantity({ itemId }));
   };
 
   const handleQuantityIncrease = (itemId) => {
-    dispatch(increaseQuantity({itemId}))
+    dispatch(increaseQuantity({ itemId }));
   };
 
   const handleRemoveProduct = (itemId) => {
-    dispatch(removeProduct({itemId}))
-
-};
+    dispatch(removeProduct({ itemId }));
+  };
 
   //   -----------------------------
+  //create orders
+  const handleCreateOrder = () => {
+    if(!shipingAddress){
+      alert("Please enter shipping address");
+      return;
+    }
+    const orderDetails = {
+      cart: cart,
+      totalAmount: totalAmount,
+      shippingAddress: shipingAddress,
+    }
+    console.log(orderDetails);
+    createOrderApi(orderDetails).then((res)=>{
+      toast.success("Order created successfully");
+    }).catch((err) => {
+      toast.error("Something went wrong");
+    })
+  };
 
   return (
     <div className="container">
@@ -64,9 +87,8 @@ const Cart = () => {
                           Shopping Cart
                         </h1>
                         <hr className="my-4" />
-                        {
-                        cart.map((item, index) =>(
-                            <div className="row mb-4 d-flex justify-content-between align-items-center">
+                        {cart.map((item, index) => (
+                          <div className="row mb-4 d-flex justify-content-between align-items-center">
                             <div className="col-md-2 col-lg-2 col-xl-2">
                               <img
                                 src={item.image}
@@ -76,9 +98,7 @@ const Cart = () => {
                             </div>
                             <div className="col-md-3 col-lg-3 col-xl-3">
                               <h6 className="text-muted">{item.category}</h6>
-                              <h6 className="text-black mb-0">
-                                {item.name}
-                              </h6>
+                              <h6 className="text-black mb-0">{item.name}</h6>
                             </div>
                             <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
                               <button
@@ -105,18 +125,18 @@ const Cart = () => {
                               </button>
                             </div>
                             <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                              <h6 className="mb-0">
-                                NPR. {item.price}
-                              </h6>
+                              <h6 className="mb-0">NPR. {item.price}</h6>
                             </div>
                             <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                               <button href="#!" className="btn">
-                                <i className="fas fa-times" onClick={() => handleRemoveProduct(item.id)}></i>
+                                <i
+                                  className="fas fa-times"
+                                  onClick={() => handleRemoveProduct(item.id)}
+                                ></i>
                               </button>
                             </div>
                           </div>
-                        ))
-                        }
+                        ))}
 
                         <hr className="my-4" />
                       </div>
@@ -139,12 +159,13 @@ const Cart = () => {
                           onChange={(e) => setShipingAddress(e.target.value)}
                         />
 
-                        <a
+                        <button
                           href="#!"
                           className="btn btn-primary btn-lg btn-block mt-3"
+                          onClick={handleCreateOrder}
                         >
                           Place an order
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>

@@ -18,6 +18,8 @@ import UserProfile from "./pages/users/UserProfile/UserProfile";
 import AdminProductEdit from "./pages/admin/AdminProductEdit/AdminProductEdit";
 import ProductDetails from "./pages/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
+import Order from "./pages/orders/Order";
+import AdminOrders from "./pages/admin/AdminOrders/Adminorders";
 
 function App() {
   return (
@@ -35,13 +37,20 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
         <Route path="/admin/product/edit/:id" element={<AdminProductEdit/>}></Route>
 
+         {/* orders */}
+        <Route path="/admin/order" element={<AdminOrders/>}></Route>
+
         {/* user Routes */}
         <Route path="/UserProfile" element={<UserProfile/>}/>
 
         {/* About */}
         <Route path="/about" element={<About />} />
-
+    {/* cart */}
         <Route path="/cart" element={<Cart/>}></Route>
+
+   
+ {/* orders */}
+    <Route path="/order" element={<Order/>}></Route>
       </Routes>
       <Footer/>
     </Router>

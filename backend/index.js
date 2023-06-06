@@ -34,9 +34,12 @@ app.get('/', (req, res) =>{
   });
 
   //middleware for user controller
-app.use('/api/user',require('./controllers/userControllers'))
+app.use('/api/user',require('./controllers/userControllers'));
   //middleware for product controller
-app.use('/api/product',require('./controllers/productController'))
+app.use('/api/product',require('./controllers/productController'));
+  //middleware for order controller
+app.use('/api/order',require('./controllers/orderController'));
+
 //Connect to DB
 connectDB();
 

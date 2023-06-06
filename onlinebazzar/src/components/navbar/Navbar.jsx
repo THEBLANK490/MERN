@@ -14,10 +14,9 @@ const Navbar = () => {
   };
 
   // get cart value from reducer
-  const {cart} = useSelector((state)=>({
+  const { cart } = useSelector((state) => ({
     cart: state.cart.cart,
-  }))
-
+  }));
 
   return (
     <>
@@ -62,7 +61,7 @@ const Navbar = () => {
               </Link>
             </div> */}
 
-            <Link to={'/cart'} className="m-4">
+            <Link to={"/cart"} className="m-4">
               <i className="fa fa-shopping-cart fa-lg"></i>
               <span className="badge rounded-pill badge-notification bg-danger">
                 {cart.length}
@@ -90,22 +89,42 @@ const Navbar = () => {
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton"
                   >
-                    {
-                      user.isAdmin ? (
+                    {user.isAdmin ? (
+                      <>
                         <li>
-                      <Link to={"/admin-dashboard"} className="dropdown-item">
-                        Admin Dashboard
-                      </Link>
-                    </li>
-                      ):
-                      <li>
-                      <Link to={"/UserProfile"} className="dropdown-item">
-                        Profile
-                      </Link>
-                    </li>
-                    }
+                          <Link
+                            to={"/admin-dashboard"}
+                            className="dropdown-item"
+                          >
+                            Admin Dashboard
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to={"/order"} className="dropdown-item">
+                            MyOrders
+                          </Link>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link to={"/UserProfile"} className="dropdown-item">
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to={"/order"} className="dropdown-item">
+                            MyOrders
+                          </Link>
+                        </li>
+                      </>
+                    )}
                     <li>
-                      <Link to={"/login"} className="dropdown-item" onClick={logout}>
+                      <Link
+                        to={"/login"}
+                        className="dropdown-item"
+                        onClick={logout}
+                      >
                         Logout
                       </Link>
                     </li>
