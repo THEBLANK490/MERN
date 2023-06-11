@@ -20,6 +20,7 @@ import ProductDetails from "./pages/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/orders/Order";
 import AdminOrders from "./pages/admin/AdminOrders/Adminorders";
+import Search from "./pages/search/Search";
 
 function App() {
   return (
@@ -47,6 +48,9 @@ function App() {
         <Route path="/about" element={<About />} />
     {/* cart */}
         <Route path="/cart" element={<Cart/>}></Route>
+
+        {/* search */}
+        <Route path ="/search/:query" element={<Search/>}/>
 
    
  {/* orders */}

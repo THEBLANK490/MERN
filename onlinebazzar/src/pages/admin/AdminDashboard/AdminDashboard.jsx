@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addproductApi, deleteProductApi, getAllProductsApi } from "../../../apis/Api";
+import {
+  addproductApi,
+  deleteProductApi,
+  getAllProductsApi,
+} from "../../../apis/Api";
 import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
@@ -63,20 +67,58 @@ const AdminDashboard = () => {
   }, []);
 
   const handleDelete = (id) => {
-    const confirmDelete =window.confirm("Are you sure want to delete this product");
-    if(confirmDelete){
-      deleteProductApi(id).then(res => {
-        toast.success("Product deleted successfully")
-        window.location.reload(true);
-      }).catch(err => {
-        toast.error("Product deletion Failed")
-      })
+    const confirmDelete = window.confirm(
+      "Are you sure want to delete this product"
+    );
+    if (confirmDelete) {
+      deleteProductApi(id)
+        .then((res) => {
+          toast.success("Product deleted successfully");
+          window.location.reload(true);
+        })
+        .catch((err) => {
+          toast.error("Product deletion Failed");
+        });
     }
   };
 
   return (
     <>
-      <div className="container">
+      <div className="container"> 
+      <div className="row my-4">
+                <div className="col-md-3">
+                    <div className='card p-3 bg-danger bg-gradient text-white'>
+                        <h4>Total Orders</h4>
+                        <hr />
+                        <h5>4</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div className="col-md-3">
+                    <div className='card p-3 bg-info bg-gradient text-white'>
+                        <h4>Orders Pending</h4>
+                        <hr />
+                        <h5>4</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div className="col-md-3">
+                    <div className='card p-3 bg-warning bg-gradient text-white'>
+                        <h4>Orders In Process</h4>
+                        <hr />
+                        <h5>4</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div className="col-md-3">
+                    <div className='card p-3 bg-success bg-gradient text-white'>
+                        <h4>Orders Delivered</h4>
+                        <hr />
+                        <h5>4</h5>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
         <div className="d-flex justify-content-between">
           <h3>Admin Dashboard</h3>
 

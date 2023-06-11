@@ -48,3 +48,10 @@ export const getOrdersByUserApi = () => Api.get("/api/order/get_single",config);
 
 //get orders by user
 export const getAllOrdersApi = () => Api.get("/api/order/get_all",config);
+
+//update order status
+export const updateOrderStatusApi = (id, data) => Api.put(`/api/order/change_status/${id}`, data, config);
+
+//search products
+export const searchProductsApi = (query) => Api.get(`/api/product/search_product/${query}`);
+

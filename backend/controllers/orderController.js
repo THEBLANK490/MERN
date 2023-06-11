@@ -33,6 +33,7 @@ router.post("/create", authGuard,async(req,res) => {
 
 router.get("/get_single",authGuard,async(req,res) => {
     try {
+        console.log("req inside get single",req.user)
         const orders = await Order.find({user: req.user.id});
         res.json(orders);
     } catch (error) {
@@ -50,6 +51,22 @@ router.get("/get_all",authGuard,async(req,res) => {
         res.json("Order Fetch Failed");
     }
 });
+
+//change order status
+router.put("/change_status/:id",async(req,res)=>{
+    try {
+        //find the order
+        const order = await Order.findById(req.params.id);
+        order.status = req.body.status;
+        await order.save();
+        res.json("Order status changed successfully");
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: error});
+        
+    }
+})
 
 
 module.exports = router;
