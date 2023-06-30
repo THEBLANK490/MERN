@@ -14,13 +14,15 @@ import Footer from "./components/footer/Footer"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminDashboard from "./pages/admin/AdminDashboard/AdminDashboard";
-import UserProfile from "./pages/users/UserProfile/UserProfile";
 import AdminProductEdit from "./pages/admin/AdminProductEdit/AdminProductEdit";
 import ProductDetails from "./pages/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/orders/Order";
 import AdminOrders from "./pages/admin/AdminOrders/Adminorders";
 import Search from "./pages/search/Search";
+import Profile from "./pages/profile/Profile";
+import ForgotPassword from "./pages/forgot_password/ForgotPassword";
+
 
 function App() {
   return (
@@ -41,8 +43,8 @@ function App() {
          {/* orders */}
         <Route path="/admin/order" element={<AdminOrders/>}></Route>
 
-        {/* user Routes */}
-        <Route path="/UserProfile" element={<UserProfile/>}/>
+        {/* profile Routes */}
+        <Route path="/profile" element={<Profile/>}/>
 
         {/* About */}
         <Route path="/about" element={<About />} />
@@ -55,6 +57,9 @@ function App() {
    
  {/* orders */}
     <Route path="/order" element={<Order/>}></Route>
+
+    {/* Forgor Password */}
+    <Route path='/forgot_password' element={<ForgotPassword/>}/>
       </Routes>
       <Footer/>
     </Router>

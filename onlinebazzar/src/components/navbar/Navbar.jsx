@@ -108,7 +108,7 @@ const Navbar = () => {
                     ) : (
                       <>
                         <li>
-                          <Link to={"/UserProfile"} className="dropdown-item">
+                          <Link to={"/profile"} className="dropdown-item">
                             Profile
                           </Link>
                         </li>

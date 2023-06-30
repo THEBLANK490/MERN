@@ -5,6 +5,7 @@ import {
   addproductApi,
   deleteProductApi,
   getAllProductsApi,
+  getCount,
 } from "../../../apis/Api";
 import { Link } from "react-router-dom";
 
@@ -18,6 +19,13 @@ const AdminDashboard = () => {
 
   //for response data
   const [products, setProducts] = useState([]);
+
+  //for count
+  const [productCount, setProductCount] = useState(0);
+  const [pendingOrderCount, setPendingOrderCount] = useState(0);
+  const [deliveredOrderCount, setDeliveredOrderCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+
 
   const handleImageUpload = (e) => {
     // const file = e.target.files[0];
@@ -55,6 +63,7 @@ const AdminDashboard = () => {
       });
   };
 
+  //for all products in table
   useEffect(() => {
     getAllProductsApi()
       .then((res) => {
@@ -64,8 +73,16 @@ const AdminDashboard = () => {
       .catch((err) => {
         console.log(err);
       });
+
+      getCount().then(res => {
+        setProductCount(res.data.productCount)
+        setPendingOrderCount(res.data.pendingOrders)
+        setDeliveredOrderCount(res.data.deliveredOrders)
+        setUserCount(res.data.userCount)
+      })
   }, []);
 
+  //for deleting the products
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
       "Are you sure want to delete this product"
@@ -82,43 +99,78 @@ const AdminDashboard = () => {
     }
   };
 
+    //for validate
+    const [productNameError, setProductNameError] = useState('');
+    const [productPriceError, setProductPriceError] = useState('');
+    const [productCategoryError, setProductCategoryError] = useState('');
+    const [productDescriptionError, setProductDescriptionError] = useState('');
+    const [productImageError,setProductImageError] = useState('');
+
+    const validate = () => {
+      let isValid = true;
+      if (productName === '') {
+          setProductNameError('Product name is required')
+          isValid = false
+      }
+      if (productPrice === '') {
+          setProductPriceError('Product price is required')
+          isValid = false
+      }
+      if (productCategory === '') {
+          setProductCategoryError('Product category is required')
+          isValid = false
+      }
+      if (productDescription === '') {
+          setProductDescriptionError('Product description is required')
+          isValid = false
+      }
+      if (productImage === null) {
+          setProductImageError('Product image is required')
+          isValid = false
+      }
+      return isValid
+
+  }
+    
+
   return (
     <>
-      <div className="container"> 
-      <div className="row my-4">
-                <div className="col-md-3">
-                    <div className='card p-3 bg-danger bg-gradient text-white'>
-                        <h4>Total Orders</h4>
-                        <hr />
-                        <h5>4</h5>
-                        <p></p>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className='card p-3 bg-info bg-gradient text-white'>
-                        <h4>Orders Pending</h4>
-                        <hr />
-                        <h5>4</h5>
-                        <p></p>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className='card p-3 bg-warning bg-gradient text-white'>
-                        <h4>Orders In Process</h4>
-                        <hr />
-                        <h5>4</h5>
-                        <p></p>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className='card p-3 bg-success bg-gradient text-white'>
-                        <h4>Orders Delivered</h4>
-                        <hr />
-                        <h5>4</h5>
-                        <p></p>
-                    </div>
-                </div>
+      <div className="container">
+        <div className="row my-4">
+          <div className="col-md-3">
+            <div className="card p-3 bg-danger bg-gradient text-white">
+              <h4>Total Products</h4>
+              <hr />
+              <h5>{productCount}</h5>
+              <p></p>
             </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card p-3 bg-warning bg-gradient text-white">
+              <h4>Total Pending Orders</h4>
+              <hr />
+              <h5>{pendingOrderCount}</h5>
+              <p></p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card p-3 bg-success bg-gradient text-white">
+              <h4>Total delivered orders</h4>
+              <hr />
+              <h5>{deliveredOrderCount}</h5>
+              <p></p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card p-3 bg-info bg-gradient text-white">
+              <h4>Total Users</h4>
+              <hr />
+              <h5>{userCount}</h5>
+              <p></p>
+            </div>
+          </div>
+        </div>
+
         <div className="d-flex justify-content-between">
           <h3>Admin Dashboard</h3>
 
